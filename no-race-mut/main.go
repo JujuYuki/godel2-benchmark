@@ -18,7 +18,7 @@ func main() {
 	m2 := new(sync.Mutex)
 	var x, y int
 	go Writer(m1, &x)
-	go Writer(m1, &y)
+	go Writer(m2, &y)
 	m1.Lock()
 	fmt.Println("x is", x)
 	m1.Unlock()
