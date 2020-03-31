@@ -13,7 +13,7 @@ def main.main():
     spawn main.phil(z1, z2, t6, t7);
     spawn main.phil(z2, z3, t7, t8);
     spawn main.phil(z3, z4, t8, t9);
-    spawn main.phil(z4, z5, t9, t5);
+    spawn main.phil(z4, z0, t9, t5);
     spawn main.Fork(z0, t5);
     spawn main.Fork(z1, t6);
     spawn main.Fork(z2, t7);
