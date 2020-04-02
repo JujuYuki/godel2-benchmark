@@ -22,7 +22,7 @@ checkgodel()
 	echo
 }
 
-BMS="no-race no-race-mut no-race-mut-bad simple-race simple-race-mut-fix deposit-race deposit-fix channel-race channel-fix channel-bad prod-cons-race prod-cons-fix"
+BMS="no-race no-race-mut no-race-mut-bad simple-race simple-race-mut-fix deposit-race deposit-fix channel-race channel-fix channel-bad prod-cons-race prod-cons-fix dine5-unsafe dine5-deadlock dine5-fix"
 for bmark in $BMS
 do
 	echo "$bmark"
@@ -45,7 +45,7 @@ do
 done
 
 BENCHMARK_COUNT=20
-DINE="dinephil5-race dinephil5-fix"
+DINE="dine5-chan-race dine5-chan-fix"
 for bmark in $DINE
 do
 	echo "$bmark"
