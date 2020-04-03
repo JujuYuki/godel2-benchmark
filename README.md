@@ -47,7 +47,7 @@ instead of as separate threads.
 
 | No Terminal State | No Cycle | No Global Deadlock | Liveness | Safety | Data Race Free | 
 |:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
-| False             | True     | True               | True     | True   | True           |
+| **False**         | True     | True               | True     | True   | True           |
 
 ### no-race-mut
 
@@ -57,16 +57,16 @@ the `Writer` instances and `main`.
 
 | No Terminal State | No Cycle | No Global Deadlock | Liveness | Safety | Data Race Free | 
 |:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
-| False             | True     | True               | True     | True   | True           |
+| **False**         | True     | True               | True     | True   | True           |
 
 ### no-race-mut-bad
 
 The same program as before, but missing the `Unlock` call at the end of the `Writer` function, 
 resulting in a deadlock if this function acquires the lock on either `m1` or `m2` before `main` does.
 
-| No Terminal State | No Cycle | No Global Deadlock | Liveness | Safety | Data Race Free | 
-|:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
-| False             | True     | False              | False    | True   | True           |
+| No Terminal State | No Cycle | No Global Deadlock | Liveness  | Safety | Data Race Free | 
+|:-----------------:|:--------:|:------------------:|:---------:|:------:|:--------------:|
+| **False**         | True     | **False**          | **False** | True   | True           |
 
 ### simple-race
 
@@ -76,7 +76,7 @@ examples one can imagine.
 
 | No Terminal State | No Cycle | No Global Deadlock | Liveness | Safety | Data Race Free | 
 |:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
-| False             | True     | True               | True     | True   | False          |
+| **False**         | True     | True               | True     | True   | **False**      |
 
 ### simple-race-mut-fix
 
@@ -85,7 +85,7 @@ version of `no-race-mut`, and is present for good measure as a comparison agains
 
 | No Terminal State | No Cycle | No Global Deadlock | Liveness | Safety | Data Race Free | 
 |:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
-| False             | True     | True               | True     | True   | True           |
+| **False**         | True     | True               | True     | True   | True           |
 
 ### deposit-race
 
@@ -96,7 +96,7 @@ This is what inspires the running example of our paper, working in the same spir
 
 | No Terminal State | No Cycle | No Global Deadlock | Liveness | Safety | Data Race Free | 
 |:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
-| False             | True     | True               | True     | True   | False          |
+| **False**         | True     | True               | True     | True   | **False**      |
 
 ### deposit-fix
 
@@ -105,7 +105,7 @@ function and used to secure access to the shared `balance` variable.
 
 | No Terminal State | No Cycle | No Global Deadlock | Liveness | Safety | Data Race Free | 
 |:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
-| False             | True     | True               | True     | True   | True           |
+| **False**         | True     | True               | True     | True   | True           |
 
 ### channel-race
 
@@ -115,7 +115,7 @@ instead of havin one of them wait for the receiver of the currently running acce
 
 | No Terminal State | No Cycle | No Global Deadlock | Liveness | Safety | Data Race Free | 
 |:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
-| False             | True     | True               | True     | True   | False          |
+| **False**         | True     | True               | True     | True   | **False**      |
 
 ### channel-fix 
 
@@ -124,7 +124,7 @@ until the channel is empty.
 
 | No Terminal State | No Cycle | No Global Deadlock | Liveness | Safety | Data Race Free | 
 |:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
-| False             | True     | True               | True     | True   | True           |
+| **False**         | True     | True               | True     | True   | True           |
 
 ### channel-bad 
 
@@ -132,9 +132,9 @@ Shows how one could intend to use channels as locks, with correct buffer size, b
 the receive and send actions, rendering the program inefficient as it would immediately deadlock — 
 there is nothing to receive from an empty, open channel.
 
-| No Terminal State | No Cycle | No Global Deadlock | Liveness | Safety | Data Race Free | 
-|:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
-| False             | True     | False              | False    | True   | True           |
+| No Terminal State | No Cycle | No Global Deadlock | Liveness  | Safety | Data Race Free | 
+|:-----------------:|:--------:|:------------------:|:---------:|:------:|:--------------:|
+| **False**         | True     | **False**          | **False** | True   | True           |
 
 ### prod-cons-race 
 
@@ -148,18 +148,18 @@ the — correctly protected — read accesses of the `Consumer` helper function.
 Note the use of channels here as signals for the `main` function to know when the `Producer` functions 
 have reached the end of their production.
 
-| No Terminal State | No Cycle | No Global Deadlock | Liveness | Safety | Data Race Free | 
-|:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
-| True              | False    | True               | True     | True   | False          |
+| No Terminal State | No Cycle  | No Global Deadlock | Liveness | Safety | Data Race Free | 
+|:-----------------:|:---------:|:------------------:|:--------:|:------:|:--------------:|
+| True              | **False** | True               | True     | True   | **False**      |
 
 ### prod-cons-fix
 
 An example of a possible fix to the previous program, enclosing all accesses to `x` in the `Producer` 
 helper function under the same lock of the shared `Mutex` lock.
 
-| No Terminal State | No Cycle | No Global Deadlock | Liveness | Safety | Data Race Free | 
-|:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
-| True              | False    | True               | True     | True   | True           |
+| No Terminal State | No Cycle  | No Global Deadlock | Liveness | Safety | Data Race Free | 
+|:-----------------:|:---------:|:------------------:|:--------:|:------:|:--------------:|
+| True              | **False** | True               | True     | True   | True           |
 
 ### dine5-unsafe 
 
@@ -177,9 +177,9 @@ The integers shared by the `phil` routines and increased upon access to the fork
 show how we can protect such shared accesses from each other to avoir a potential race, though 
 in this wrong version of the program they do not manage to be used.
 
-| No Terminal State | No Cycle | No Global Deadlock | Liveness | Safety | Data Race Free | 
-|:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
-| False             | True     | False              | True     | False  | True           |
+| No Terminal State | No Cycle | No Global Deadlock | Liveness | Safety    | Data Race Free | 
+|:-----------------:|:--------:|:------------------:|:--------:|:---------:|:--------------:|
+| **False**         | True     | **False**          | True     | **False** | True           |
 
 ### dine5-deadlock 
 
@@ -189,9 +189,9 @@ a grip of the left fork first and right fork second, a bad scheduling can deadlo
 each `phil` with id `i` would manage to grab fork `i+1` but fail to grab the other fork (already taken 
 by an other `phil` instance).
 
-| No Terminal State | No Cycle | No Global Deadlock | Liveness | Safety | Data Race Free | 
-|:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
-| False             | False    | False              | False    | True   | True           |
+| No Terminal State | No Cycle  | No Global Deadlock | Liveness  | Safety | Data Race Free | 
+|:-----------------:|:---------:|:------------------:|:---------:|:------:|:--------------:|
+| **False**         | **False** | **False**          | **False** | True   | True           |
 
 ### dine5-fix 
 
@@ -200,9 +200,9 @@ Here we invert forks 5 and 1 for the last `phil` call, making it be in concurren
 to get it as the first fork, and leaving fork 5 free if it doesn't manage to get forl 1, 
 so `phil` "3" can get it and finish its round. 
 
-| No Terminal State | No Cycle | No Global Deadlock | Liveness | Safety | Data Race Free | 
-|:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
-| True              | False    | True               | True     | True   | True           |
+| No Terminal State | No Cycle  | No Global Deadlock | Liveness | Safety | Data Race Free | 
+|:-----------------:|:---------:|:------------------:|:--------:|:------:|:--------------:|
+| True              | **False** | True               | True     | True   | True           |
 
 ### dine5-chan-race 
 
@@ -217,9 +217,9 @@ creating potential races (even if benign).
 > in mCRL2. _Do not run_ unless you have a powerful machine and are ready for it to 
 > compute for several hours.**
 
-| No Terminal State | No Cycle | No Global Deadlock | Liveness | Safety | Data Race Free | 
-|:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
-| True              | False    | True               | True     | True   | False          |
+| No Terminal State | No Cycle  | No Global Deadlock | Liveness | Safety | Data Race Free | 
+|:-----------------:|:---------:|:------------------:|:--------:|:------:|:--------------:|
+| True              | **False** | True               | True     | True   | **False**      |
 
 ### dine5-chan-fix
 
@@ -232,6 +232,6 @@ routines set them.
 > in mCRL2. _Do not run_ unless you have a powerful machine and are ready for it to 
 > compute for several hours.**
 
-| No Terminal State | No Cycle | No Global Deadlock | Liveness | Safety | Data Race Free | 
-|:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
-| True              | False    | True               | True     | True   | True           |
+| No Terminal State | No Cycle  | No Global Deadlock | Liveness | Safety | Data Race Free | 
+|:-----------------:|:---------:|:------------------:|:--------:|:------:|:--------------:|
+| True              | **False** | True               | True     | True   | True           |
