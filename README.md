@@ -1,7 +1,7 @@
 # godel2-benchmark
 Godel 2 benchmark script and example code.
 
-To run, place your own compiled versions of the Godel and migoinfer executables, and run the script.
+To run, place your own compiled versions of the Godel and migoinfer executables in your PATH, and run the script.
 Runs on Linux, the timings are written in timings.csv at the end of each batch of marking.
 
 Those examples can be used with the Docker-ready `Godel` and `migoinfer` tools as explained 
@@ -16,16 +16,16 @@ Below is a brief description of each example in this repository along with the e
   is not finite control will not be analysed for other properties, as mCRL2 is unable to generate 
   a linear process specification for those.
 * No terminal state: is true when the program has no terminal state, meaning it would run 
-  continuously if given no time constraints (eg. in the Dining Philosophers examples, remove the 
+  continuously if given no time constraints (e.g. in the Dining Philosophers examples, remove the 
   `Sleep` line and make the final function call synchronous by removing its `go` keyword).
 * No cycle: is true if the program doesn't present an infinite cycle.
 * No global deadlock: is true if the program doesn't reach a global deadlock during normal 
   execution. The final state, if it exists, does not count as a global deadlock.
 * Liveness: is true if the program is "live" according to the definition of liveness in our paper,
-  which includes both eventual synchronisartion over channels and eventual locking of 
+  which includes both eventual synchronisation over channels and eventual locking of 
   `Mutex` locks.
 * Safety: is true if the program is "safe" according to the definition of safety in our paper,
-  which includes not trying to send a message on a closed channel and not trying to `Unlock` — resp. 
+  which includes not trying to send a message on a closed channel, and not trying to `Unlock` — resp. 
   `RUnlock` — a `Mutex` — resp `RWmutex` — that is not already locked via a `Lock` — resp `RLock` — 
   call.
 * Data race free: is true if the program does not present a data race over a shared variable. 
@@ -110,8 +110,8 @@ function and used to secure access to the shared `balance` variable.
 ### channel-race
 
 A program that uses an asynchronous channel as a lock, but mistakenly puts the channel buffer size as 2 
-which allows for the 2 senders supposed to protect the shared emmory accesses to happen together, 
-instead of havin one of them wait for the receiver of the currently running access to unlock the channel. 
+which allows for the 2 senders supposed to protect the shared memory accesses to happen together, 
+instead of having one of them wait for the receiver of the currently running access to unlock the channel. 
 
 | No Terminal State | No Cycle | No Global Deadlock | Liveness | Safety | Data Race Free | 
 |:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
@@ -128,7 +128,7 @@ until the channel is empty.
 
 ### channel-bad 
 
-Shows how one could intend to use channels as locks, with correct buffer size, but mistakenly invert 
+Shows how one could intend to use channels as locks, with correct buffer size, but mistakenly inverts 
 the receive and send actions, rendering the program inefficient as it would immediately deadlock — 
 there is nothing to receive from an empty, open channel.
 
@@ -139,8 +139,8 @@ there is nothing to receive from an empty, open channel.
 ### prod-cons-race 
 
 A naive implementation of a producers-consumer situation, where the producers each give out a limited 
-amount of ressources, and the consumer takes all of them in the order they arrive and consumes them. 
-In this case, the ressources are all placed in the same shared variable (and taken from it), but the 
+amount of resources, and the consumer takes all of them in the order they arrive and consumes them. 
+In this case, the resources are all placed in the same shared variable (and taken from it), but the 
 `Producer` helper function does not use the `Mutex` lock to protect its writes. 
 In turn, those writes can clash with those of other producers using the same variable, and even with 
 the — correctly protected — read accesses of the `Consumer` helper function.
@@ -174,7 +174,7 @@ for the first lock in the `phil` function, making the program immediately stop a
 it is an unsafe access. 
 
 The integers shared by the `phil` routines and increased upon access to the forks are used to 
-show how we can protect such shared accesses from each other to avoir a potential race, though 
+show how we can protect such shared accesses from each other to avoid a potential race, though 
 in this wrong version of the program they do not manage to be used.
 
 | No Terminal State | No Cycle | No Global Deadlock | Liveness | Safety    | Data Race Free | 
@@ -195,9 +195,9 @@ by an other `phil` instance).
 
 ### dine5-fix 
 
-The known fix to the above lock, which is to invers the order of the forks for one of the `phil` routines. 
+The known fix to the above lock, which is to invert the order of the forks for one of the `phil` routines. 
 Here we invert forks 5 and 1 for the last `phil` call, making it be in concurrency for fork 1 with `phil` "0" 
-to get it as the first fork, and leaving fork 5 free if it doesn't manage to get forl 1, 
+to get it as the first fork, and leaving fork 5 free if it doesn't manage to get fork 1, 
 so `phil` "3" can get it and finish its round. 
 
 | No Terminal State | No Cycle  | No Global Deadlock | Liveness | Safety | Data Race Free | 
