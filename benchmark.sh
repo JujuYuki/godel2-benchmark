@@ -2,16 +2,11 @@
 
 set -e
 
+if [ ! -f Godel ]; then echo "Put Godel in $(pwd). This script is intended for use with a local build to time execution of the toolchain." && exit 1; fi
+if [ ! -f migoinfer ]; then echo "Put migoinfer in $(pwd). This script is intended for use with a local build to time execution of the toolchain." && exit 1; fi
+
 BENCHMARK_COUNT=100
 echo "BMARK,AVG_TIME,BMARK_COUNT,BMARK_TIMES" | tee -a timing.csv
-
-checkterm()
-{
-	if [ ! -f Godel ]; then echo "Put Godel in $(pwd)" && exit 1; fi
-	echo "## Gocel checkterm ## benchmark $1"
-	./Godel -T $1/main.cgo
-	echo
-}
 
 checkgodel()
 {
@@ -22,7 +17,7 @@ checkgodel()
 	echo
 }
 
-BMS="no-race no-race-mut no-race-mut-bad simple-race simple-race-mut-fix deposit-race deposit-fix channel-race channel-fix channel-bad prod-cons-race prod-cons-fix dine5-unsafe dine5-deadlock dine5-fix"
+BMS="no-race no-race-mut no-race-mut-bad simple-race simple-race-mut-fix deposit-race deposit-fix channel-race channel-fix channel-bad prod-cons-race prod-cons-fix dine5-unsafe dine5-deadlock dine5-fix dine3-chan-race dine3-chan-fix"
 for bmark in $BMS
 do
 	echo "$bmark"
