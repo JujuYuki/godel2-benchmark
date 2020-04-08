@@ -61,7 +61,7 @@ echo
 if [[ $continuedine =~ ^(n|N)$ ]]; then
 	echo "Stopping here." && exit 0
 elif [[ $continuedine =~ ^(y|Y)$ ]]; then
-	echo "Continuing to the last two examples, if you want to stop cancel, stop execution with ^C."
+	echo "Continuing to the last two examples, this will take a while."
 else
 	echo "Invalid input. Default to N." && exit 0
 fi
