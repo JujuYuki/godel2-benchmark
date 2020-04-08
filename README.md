@@ -1,11 +1,27 @@
 # godel2-benchmark
 Godel 2 benchmark script and example code.
 
-To run, place your own compiled versions of the Godel and migoinfer executables in your PATH, and run the script.
-Runs on Linux, the timings are written in timings.csv at the end of each batch of marking.
+## How to run
 
-Those examples can be used with the Docker-ready `Godel` and `migoinfer` tools as explained 
-in the ReadMe file of the [Godel2 repository](https://github.com/JujuYuki/godel2).
+### Running the examples for testing
+
+To run the artifact test for the companion paper, install the Docker image (see the main 
+[Godel2 repository](https://github.com/JujuYuki/godel2)), and run the `run.sh` script. 
+the script will run the main examples, and ask you whether to continue before running the 
+5-participant dining philosophers with channels example (those take hours to complete).
+
+The expected execution time before that prompt is under 20 minutes.
+
+Alternatively, you can run the examples individually with the Docker-ready versions of 
+`migoinfer` and `Godel` as explained in the main [Godel2 repository](https://github.com/JujuYuki/godel2), 
+or with your own compiled versions of the programs.
+
+### Running the benchmark for timings
+
+To run **the benchmark for timings**, place your own compiled versions of the Godel and migoinfer executables in the 
+working directory, and run the `benchmark.sh` script.
+Runs on Linux, the timings are written in timings.csv at the end of each batch of marking.
+This could take hours (because of the two dine5-chan-\* examples), and is not intended to be used for artifact testing.
 
 Below is a brief description of each example in this repository along with the expected output.
 
