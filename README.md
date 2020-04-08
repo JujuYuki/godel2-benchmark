@@ -5,7 +5,7 @@ Godel 2 benchmark script and example code.
 
 ### Running the examples for testing
 
-To run the artifact test for the companion paper, install the docker image (see the main 
+To run the artifact test for the companion paper, install the Docker image (see the main 
 [Godel2 repository](https://github.com/JujuYuki/godel2)), and run the `run.sh` script. 
 the script will run the main examples, and ask you whether to continue before running the 
 5-participant dining philosophers with channels example (those take hours to complete).
