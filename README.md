@@ -204,33 +204,39 @@ so `phil` "3" can get it and finish its round.
 |:-----------------:|:---------:|:------------------:|:--------:|:------:|:--------------:|
 | True              | **False** | True               | True     | True   | True           |
 
-### dine5-chan-race 
+### dineN-chan-race 
 
-A channel-based implementation of the Dining Philosophers problem with 5 participants, 
+A channel-based implementation of the Dining Philosophers problem with N=3 or 5 participants, 
 using synchronous channels as locks, where the `Fork` helper should manage the channel to lock access 
 to it when in use by a `phil` routine. The problem here is the accesses to the shared `fork` variables 
 at the same time for sending the value in `phil` and for setting it in `Fork`, 
 creating potential races (even if benign).
 
-> **This program uses select constructs with channels, which makes it long to analyse with our 
+> **This program uses select constructs with channels. This makes the version with
+> 5 participants long to analyse with our 
 > framework as it creates a lot of branches to explore in the associated linear process specification 
-> in mCRL2. _Do not run_ unless you have a powerful machine and are ready for it to 
+> in mCRL2. _Do not run_ the 5-participant version unless you have a powerful machine and are ready for it to 
 > compute for several hours.**
+> The 3-participant version should run within a few minutes at most, and is given for reference as a way 
+> to test the protocol on less powerful machines within reasonable time.
 
 | No Terminal State | No Cycle  | No Global Deadlock | Liveness | Safety | Data Race Free | 
 |:-----------------:|:---------:|:------------------:|:--------:|:------:|:--------------:|
 | True              | **False** | True               | True     | True   | **False**      |
 
-### dine5-chan-fix
+### dineN-chan-fix
 
 A fix for the previous program, consisting in simply inverting all the channel send and receives, 
 making sure the `phil` routines do not try to read the shared `fork` at the same time as the `Fork` 
 routines set them.
 
-> **This program uses select constructs with channels, which makes it long to analyse with our 
+> **This program uses select constructs with channels. This makes the version with
+> 5 participants long to analyse with our 
 > framework as it creates a lot of branches to explore in the associated linear process specification 
-> in mCRL2. _Do not run_ unless you have a powerful machine and are ready for it to 
+> in mCRL2. _Do not run_ the 5-participant version unless you have a powerful machine and are ready for it to 
 > compute for several hours.**
+> The 3-participant version should run within a few minutes at most, and is given for reference as a way 
+> to test the protocol on less powerful machines within reasonable time.
 
 | No Terminal State | No Cycle  | No Global Deadlock | Liveness | Safety | Data Race Free | 
 |:-----------------:|:---------:|:------------------:|:--------:|:------:|:--------------:|
