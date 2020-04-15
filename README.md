@@ -233,7 +233,8 @@ creating potential races (even if benign).
 > framework as it creates a lot of branches to explore in the associated linear process specification 
 > in mCRL2. _Do not run_ the 5-participant version unless you have a powerful machine and are ready for it to 
 > compute for several hours.**
-> The 3-participant version should run within a few minutes at most, and is given for reference as a way 
+> The 3-participant version is a downscaled version added for convenience. 
+> It should run within a few minutes at most, and is given for reference as a way 
 > to test the protocol on less powerful machines within reasonable time.
 
 | No Terminal State | No Cycle  | No Global Deadlock | Liveness | Safety | Data Race Free | 
@@ -251,7 +252,8 @@ routines set them.
 > framework as it creates a lot of branches to explore in the associated linear process specification 
 > in mCRL2. _Do not run_ the 5-participant version unless you have a powerful machine and are ready for it to 
 > compute for several hours.**
-> The 3-participant version should run within a few minutes at most, and is given for reference as a way 
+> The 3-participant version is a downscaled version added for convenience. 
+> It should run within a few minutes at most, and is given for reference as a way 
 > to test the protocol on less powerful machines within reasonable time.
 
 | No Terminal State | No Cycle  | No Global Deadlock | Liveness | Safety | Data Race Free | 
