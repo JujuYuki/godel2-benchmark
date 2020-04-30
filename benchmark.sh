@@ -17,7 +17,7 @@ checkgodel()
 	echo
 }
 
-BMS="no-race no-race-mut no-race-mut-bad simple-race simple-race-mut-fix deposit-race deposit-fix channel-race channel-fix channel-bad prod-cons-race prod-cons-fix dine5-unsafe dine5-deadlock dine5-fix dine3-chan-race dine3-chan-fix"
+BMS="no-race no-race-mutex no-race-mut-bad simple-race simple-race-fix deposit-race deposit-fix ch-as-lock-race ch-as-lock-fix ch-as-lock-bad prod-cons-race prod-cons-fix dine5-unsafe dine5-deadlock dine5-fix dine3-chan-race dine3-chan-fix"
 for bmark in $BMS
 do
 	echo "$bmark"

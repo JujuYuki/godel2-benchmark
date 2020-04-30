@@ -65,7 +65,7 @@ instead of as separate threads.
 |:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
 | **False**         | True     | True               | True     | True   | True           |
 
-### no-race-mut
+### no-race-mutex
 
 A variation of the previous program, running the `Writer` calls in separate threads using 
 the `go` keyword, and using `Mutex` locks to ensure exclusive access to `x` and `y` between 
