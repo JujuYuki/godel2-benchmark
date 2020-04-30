@@ -94,7 +94,7 @@ examples one can imagine.
 |:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
 | **False**         | True     | True               | True     | True   | **False**      |
 
-### simple-race-mut-fix
+### simple-race-fix
 
 A variation on the previous program, with an added `Mutex` lock to make it safe. That makes it a simpler 
 version of `no-race-mut`, and is present for good measure as a comparison against `simple-race`.
@@ -123,7 +123,7 @@ function and used to secure access to the shared `balance` variable.
 |:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
 | **False**         | True     | True               | True     | True   | True           |
 
-### channel-race
+### ch-as-lock-race
 
 A program that uses an asynchronous channel as a lock, but mistakenly puts the channel buffer size as 2 
 which allows for the 2 senders supposed to protect the shared memory accesses to happen together, 
@@ -133,7 +133,7 @@ instead of having one of them wait for the receiver of the currently running acc
 |:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
 | **False**         | True     | True               | True     | True   | **False**      |
 
-### channel-fix 
+### ch-as-lock-fix 
 
 Fixes the previous program by putting the channel size to 1, making the send commands to correctly block 
 until the channel is empty.
@@ -142,7 +142,7 @@ until the channel is empty.
 |:-----------------:|:--------:|:------------------:|:--------:|:------:|:--------------:|
 | **False**         | True     | True               | True     | True   | True           |
 
-### channel-bad 
+### ch-as-lock-bad 
 
 Shows how one could intend to use channels as locks, with correct buffer size, but mistakenly inverts 
 the receive and send actions, rendering the program inefficient as it would immediately deadlock — 
@@ -259,3 +259,9 @@ routines set them.
 | No Terminal State | No Cycle  | No Global Deadlock | Liveness | Safety | Data Race Free | 
 |:-----------------:|:---------:|:------------------:|:--------:|:------:|:--------------:|
 | True              | **False** | True               | True     | True   | True           |
+
+### loop
+
+A simple loop example added to the request of a reviewer, it puts actions after the loops to handle an edge case of the cleanup process 
+that is done as part of `migoinfer`'s inference process. This is mainly to show what happens when there's a (non-trivial) loop when 
+checking for termination (`Godel -T <cgo file>`).
